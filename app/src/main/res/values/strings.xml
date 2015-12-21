@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">HyppoApp</string>
+    <string name="logout_menuItem">Log out</string>
+    <string name="setUp_menuItem">Profile</string>
+
+
+    <!-- MainActivity: Estados de ánimo -->
+    <string name="textviewestado_Feliz_off">Feliz</string>
+    <string name="textviewestado_Normal_off">Normal</string>
+    <string name="textviewestado_Triste_off">Triste</string>
+    <string name="button_login">Log in</string>
+
+    <!-- Login: Strings-->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!--Signup: Strings-->
+    <string name="action_new_user">Not an user yet?</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="hint_Username">Username</string>
+    <string name="hint_Password">Password</string>
+    <string name="hint_Email">E-Mail</string>
+
+    <string name="title_activity_set_up">SetUpActivity</string>
+
+    <!--Setup: Strings-->
+    <string name="hint_Name">Name and surname</string>
+    <string name="hint_Genre">Male or Female</string>
+    <string name="hint_DoB">mm-dd-yyyy</string>
+    <string name="hint_TypeOf">Type of Hypothyroides</string>
+
+
+</resources>
