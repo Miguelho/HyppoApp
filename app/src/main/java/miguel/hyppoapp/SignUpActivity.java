@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText usernameField, passwordField, emailField;
+    private EditText usernameField, passwordField, emailField,nameField, genreField, DoBField, ToHField;;
     private ParseUser parseUser = new ParseUser();
     private ProgressBar progressBar;
     @Override
@@ -31,9 +31,13 @@ public class SignUpActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        usernameField = (EditText) findViewById(R.id.editText_Username);
-        passwordField = (EditText) findViewById(R.id.editText_Password);
-        emailField = (EditText) findViewById(R.id.editText_Email);
+        usernameField = (EditText) findViewById(R.id.usernameField);
+        passwordField = (EditText) findViewById(R.id.passwordField);
+        emailField = (EditText) findViewById(R.id.emailField);
+        nameField = (EditText) findViewById(R.id.nameField);
+        genreField = (EditText) findViewById(R.id.genreField);
+        DoBField = (EditText) findViewById(R.id.DoBField);
+        ToHField = (EditText) findViewById(R.id.typeOfHyppofield);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -52,6 +56,10 @@ public class SignUpActivity extends AppCompatActivity {
             parseUser.setUsername(usernameField.getText().toString());
             parseUser.setPassword(passwordField.getText().toString());
             parseUser.setEmail(emailField.getText().toString());
+            parseUser.put("Name", nameField.getText().toString());
+            parseUser.put("Relation_Genre", genreField.getText().toString());
+            parseUser.put("DoB", DoBField.getText().toString());
+            parseUser.put("TypeOfHypo", ToHField.getText().toString());
 
             signUpBack();
 

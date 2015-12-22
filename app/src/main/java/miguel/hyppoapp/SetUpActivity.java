@@ -1,5 +1,6 @@
 package miguel.hyppoapp;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,21 +13,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
 public class SetUpActivity extends AppCompatActivity {
     private EditText nameField, genreField, DoBField, ToHField;
-    Intent intent= null;
+    Intent intent = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up);
-        intent= getIntent();
+        intent = getIntent();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,6 +52,9 @@ public class SetUpActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 nameField.setText(ParseUser.getCurrentUser().getString("Name"));
+                DoBField.setText(ParseUser.getCurrentUser().getString("DoB"));
+                genreField.setText(ParseUser.getCurrentUser().getString("Relation_Genre"));
+                ToHField.setText(ParseUser.getCurrentUser().getString("TypeOfHypo"));
             }
             int flagIntent = intent.getExtras().getInt("Flag A");
             Log.v("Flag", String.valueOf(flagIntent));
@@ -58,30 +66,32 @@ public class SetUpActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("Flag i" , String.valueOf(intent.getExtras().getInt("Flag A")));
-                if (intent.getExtras().getInt("Flag A") == 0) {
-                    insertPerson(view);
-                    Toast.makeText(SetUpActivity.this, "0", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(SetUpActivity.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    insertPerson(view);
-                    finish();
-                }
+                ParseACL p = new ParseACL(ParseUser.getCurrentUser());
+                ParseACL.setDefaultACL(p, false);
+
+                ParseUser.getCurrentUser().put("Name", nameField.getText().toString());
+                ParseUser.getCurrentUser().put("DoB", DoBField.getText().toString());
+                ParseUser.getCurrentUser().put("Relation_Genre", genreField.getText().toString());
+                ParseUser.getCurrentUser().put("TypeOfHypo",ToHField.getText().toString());
+                ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            intent = new Intent(SetUpActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(SetUpActivity.this, "Changes weren't saved", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                });
+
+
+
+
             }
         });
     }
 
-    public void insertPerson(View v) {
-        ParseObject person = new ParseObject("Persona");
-        //As follows, the Person is linked to one User.
-        person.put("createdBy", ParseUser.getCurrentUser());
-        person.put("Name", nameField.getText().toString());
-        person.put("Relation_Genre", genreField.getText().toString());
-        person.put("DoB", DoBField.getText().toString());
-        person.put("TypeOfHypo", ToHField.getText().toString());
-        person.saveInBackground();
-
-    }
 
 }

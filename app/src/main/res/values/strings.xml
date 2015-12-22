@@ -5,9 +5,9 @@
 
 
     <!-- MainActivity: Estados de ánimo -->
-    <string name="textviewestado_Feliz_off">Feliz</string>
+    <string name="textviewestado_Feliz_off">Happy</string>
     <string name="textviewestado_Normal_off">Normal</string>
-    <string name="textviewestado_Triste_off">Triste</string>
+    <string name="textviewestado_Triste_off">Sad</string>
     <string name="button_login">Log in</string>
 
     <!-- Login: Strings-->

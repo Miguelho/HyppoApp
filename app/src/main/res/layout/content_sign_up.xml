@@ -12,35 +12,75 @@
     tools:context="miguel.hyppoapp.SignUpActivity"
     tools:showIn="@layout/activity_sign_up">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Data"
+        android:id="@+id/registerLabel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="24dp" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_Username"
-            android:id="@+id/editText_Username" />
+            android:id="@+id/usernameField" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText_Password"
+            android:id="@+id/passwordField"
             android:hint="@string/hint_Password"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText_Email"
+            android:id="@+id/emailField"
             android:hint="@string/hint_Email"/>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:visibility="invisible"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/nameField"
+            android:hint="Name and Surname" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/DoBField"
+            android:hint="Date of Birth (dd-mm-yyyy)" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/genreField"
+            android:hint="Genre (Male / Female)" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/typeOfHyppofield"
+            android:hint="Type of Hyppo" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toRightOf="@+id/registerLabel"
+        android:layout_toEndOf="@+id/registerLabel" />
 </RelativeLayout>
