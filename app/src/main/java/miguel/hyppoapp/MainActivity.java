@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,18 +70,43 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
     private void addStates() {
-        ParseObject state = new ParseObject("State");
-        Toast.makeText(getApplicationContext(), String.valueOf(parseHandler.moodMap.get(mood)), Toast.LENGTH_LONG).show();
-        state.put("Relation_Mood", String.valueOf(parseHandler.moodMap.get(mood)));
-        state.put("Relation_User",ParseUser.getCurrentUser().getObjectId());
+        String moodString = parseHandler.moodMap.get(mood);
+        ParseObject mood = new ParseObject("Mood");
+        mood.setObjectId(moodString);
 
-        ParseRelation<ParseObject>state_PhysicalState= state.getRelation("State_PhysicalState");
-        ParseObject condition1= new ParseObject("PhysicalState");
-        ParseObject condition2= new ParseObject("PhysicalState");
-        ParseObject condition3= new ParseObject("PhysicalState");
-        state_PhysicalState.add();
-        state.put("S")
-        state.saveInBackground();
+        ParseObject state = new ParseObject("State");
+        //Toast.makeText(getApplicationContext(), String.valueOf(parseHandler.moodMap.get(mood)), Toast.LENGTH_LONG).show();
+        state.put("Relation_Mood", mood);
+        state.put("Relation_User", ParseUser.getCurrentUser());
+        ParseRelation<ParseObject> relation= state.getRelation("condition");
+        Log.v("relation", relation.toString());
+
+        try {
+            state.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        ParseObject condition = new ParseObject("PhysicalState");
+        //ParseObject condition1 = new ParseObject("PhysicalState");
+        //ParseObject condition2 = new ParseObject("PhysicalState");
+        condition.setObjectId("x11TfeRz6h");
+
+        if(condition!=null) {
+            //Log.v("Condition", condition.getString("Name"));
+            relation.add(condition);
+        }else{
+            Toast.makeText(getApplicationContext(),"Nulo",Toast.LENGTH_LONG).show();
+        }
+        /*relation.add(condition1.getParseObject("GOGvwLcZUS"));
+        relation.add(condition1.getParseObject("757r5hhuPf"));*/
+        //state.put("State_PhysicalState",relation);
+        try {
+            state.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
     public String moodClicked(View v) {

@@ -22,9 +22,9 @@ public class ParseHandler {
         moodMap.put("Normal","2kDjF5Hdaa");
         moodMap.put("Sad","yfSXhR3Ci3");
 
-        conditionMap.put();
-        conditionMap.put();
-        conditionMap.put();
+        conditionMap.put("Pain","x11TfeRz6h");
+        conditionMap.put("Sleep","GOGvwLcZUS");
+        conditionMap.put("Mental","757r5hhuPf");
 
     }
 }
