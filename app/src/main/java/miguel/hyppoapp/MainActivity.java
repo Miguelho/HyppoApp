@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +30,11 @@ import miguel.hyppoapp.Application.ParseHandler;
 
 public class MainActivity extends AppCompatActivity {
     private Intent intent;
-    private String errorMessage = "", mood = "";
+    private String errorMessage = "", mood = "", pain = "", sleep = "", mental = "";
     private TextView nameLabel, happyLabel, normalLabel, sadLabel;
-    private ParseHandler parseHandler = new ParseHandler();
+    private ParseHandler parseHandler;
+    private boolean flagConditions = false;
+    private ParseObject condition = null, condition1 = null, condition2 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         nameLabel = (TextView) findViewById(R.id.tvUserName);
-        happyLabel = (TextView) findViewById(R.id.happy_Label);
-        normalLabel = (TextView) findViewById(R.id.normal_Label);
-        sadLabel = (TextView) findViewById(R.id.sad_Label);
+        //happyLabel = (TextView) findViewById(R.id.happyLabel);
+        //normalLabel = (TextView) findViewById(R.id.normal_Label);
+        //sadLabel = (TextView) findViewById(R.id.sadLabel);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -64,44 +68,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private boolean checkForm(){
-        if(!mood.equals(""))
+    private boolean checkForm() {
+        if (!mood.equals("")) {
             return true;
+        }
+
         return false;
     }
+
     private void addStates() {
         String moodString = parseHandler.moodMap.get(mood);
         ParseObject mood = new ParseObject("Mood");
         mood.setObjectId(moodString);
 
         ParseObject state = new ParseObject("State");
-        //Toast.makeText(getApplicationContext(), String.valueOf(parseHandler.moodMap.get(mood)), Toast.LENGTH_LONG).show();
         state.put("Relation_Mood", mood);
         state.put("Relation_User", ParseUser.getCurrentUser());
-        ParseRelation<ParseObject> relation= state.getRelation("condition");
-        Log.v("relation", relation.toString());
+        ParseRelation<ParseObject> relation = state.getRelation("condition");
 
-        try {
+        /*try {
             state.save();
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-
-
-        ParseObject condition = new ParseObject("PhysicalState");
-        //ParseObject condition1 = new ParseObject("PhysicalState");
-        //ParseObject condition2 = new ParseObject("PhysicalState");
-        condition.setObjectId("x11TfeRz6h");
-
-        if(condition!=null) {
-            //Log.v("Condition", condition.getString("Name"));
+        }*/
+        if (!pain.equals("")) {
+            String painString = parseHandler.conditionMap.get(pain);
+            condition = new ParseObject("PhysicalState");
+            condition.setObjectId(painString);
             relation.add(condition);
-        }else{
-            Toast.makeText(getApplicationContext(),"Nulo",Toast.LENGTH_LONG).show();
         }
-        /*relation.add(condition1.getParseObject("GOGvwLcZUS"));
-        relation.add(condition1.getParseObject("757r5hhuPf"));*/
-        //state.put("State_PhysicalState",relation);
+        if (!sleep.equals("")) {
+            String sleepString = parseHandler.conditionMap.get(sleep);
+            condition1 = new ParseObject("PhysicalState");
+            condition1.setObjectId(sleepString);
+            relation.add(condition1);
+        }
+        if (!mental.equals("")) {
+            String mentalString = parseHandler.conditionMap.get(mental);
+            condition2 = new ParseObject("PhysicalState");
+            condition2.setObjectId(mentalString);
+            relation.add(condition2);
+            //condition.setObjectId("x11TfeRz6h");
+        }
+
         try {
             state.save();
         } catch (ParseException e) {
@@ -109,12 +118,60 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public String moodClicked(View v) {
-        TextView moodLabel = (TextView) v;
-        mood = moodLabel.getText().toString();
-        Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_LONG).show();
+        ImageView imageView = (ImageView) v;
+        //TextView moodLabel = (TextView) v;
+        if (imageView == findViewById(R.id.sadLogo)){
+            mood="Sad";
+            Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
+        }else if(imageView == findViewById(R.id.normalLogo)){
+            mood="Normal";
+            Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
+        }else{
+            mood="Happy";
+            Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
+        }
         return mood;
     }
+
+    public void painClicked(View v) {
+        TextView painLabel = (TextView) v;
+        if (flagConditions) {
+            pain = painLabel.getText().toString();
+            Toast.makeText(getApplicationContext(), pain, Toast.LENGTH_SHORT).show();
+            flagConditions = false;
+        } else {
+            pain = "";
+            Toast.makeText(getApplicationContext(), pain, Toast.LENGTH_SHORT).show();
+            flagConditions = true;
+        }
+    }
+
+    public void sleepClicked(View v) {
+        TextView sleepLabel = (TextView) v;
+        if (flagConditions) {
+            sleep = sleepLabel.getText().toString();
+            Toast.makeText(getApplicationContext(), sleep, Toast.LENGTH_SHORT).show();
+            flagConditions = false;
+        } else {
+            sleep = "";
+            Toast.makeText(getApplicationContext(), sleep, Toast.LENGTH_SHORT).show();
+            flagConditions = true;
+        }
+    }
+
+    public void mentalClicked(View v) {
+        TextView mentalLabel = (TextView) v;
+        if (flagConditions) {
+            mental = mentalLabel.getText().toString();
+            flagConditions = false;
+        } else {
+            mental = "";
+            flagConditions = true;
+        }
+    }
+
 
     private Dialog generarDialogo(String error) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

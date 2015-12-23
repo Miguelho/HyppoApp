@@ -8,6 +8,10 @@
     <string name="textviewestado_Feliz_off">Happy</string>
     <string name="textviewestado_Normal_off">Normal</string>
     <string name="textviewestado_Triste_off">Sad</string>
+    <string name="painLabel_off">Pain</string>
+    <string name="sleepLabel_off">Sleep</string>
+    <string name="mentalLabel_off">Mental</string>
+
     <string name="button_login">Log in</string>
 
     <!-- Login: Strings-->
