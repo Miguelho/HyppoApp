@@ -1,16 +1,12 @@
-package miguel.hyppoapp.Application;
+package miguel.hyppoapp;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +37,6 @@ public class ParseHandler {
             conditionMap.put(String.valueOf(iteratorConditions.get("Name")), iteratorConditions.getObjectId());
         }
 
-
         /*moodMap.put("Happy", "qAEiyzKOZu");
         moodMap.put("Normal","2kDjF5Hdaa");
         moodMap.put("Sad","yfSXhR3Ci3");*/
@@ -49,6 +44,14 @@ public class ParseHandler {
         conditionMap.put("Sleep","GOGvwLcZUS");
         conditionMap.put("Mental","757r5hhuPf");*/
 
+    }
+    public static String returnKey(String objectId){
+        if(objectId.equals("yfSXhR3Ci3"))
+            return "Sad";
+        else if(objectId.equals("2kDjF5Hdaa"))
+            return "Normal";
+        else
+            return "Happy";
     }
 }
 

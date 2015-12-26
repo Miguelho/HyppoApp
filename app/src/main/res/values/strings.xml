@@ -5,10 +5,12 @@
 
 
     <!-- MainActivity: Estados de ánimo -->
+    <string name="moodQuestion">¿Qué tal?</string>
+    <string name="conditionQuestion">¿Qué tal te encuentras?</string>
     <string name="textviewestado_Feliz_off">Happy</string>
     <string name="textviewestado_Normal_off">Normal</string>
     <string name="textviewestado_Triste_off">Sad</string>
-    <string name="painLabel_off">Pain</string>
+    <string name="painLabel">Pain</string>
     <string name="sleepLabel_off">Sleep</string>
     <string name="mentalLabel_off">Mental</string>
 
@@ -42,6 +44,7 @@
     <string name="hint_Genre">Male or Female</string>
     <string name="hint_DoB">mm-dd-yyyy</string>
     <string name="hint_TypeOf">Type of Hypothyroides</string>
+    <string name="title_activity_history">HistoryActivity</string>
 
 
 </resources>

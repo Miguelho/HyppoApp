@@ -12,164 +12,220 @@
     tools:context="miguel.hyppoapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/headerLayout"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:onClick="moodClicked"
-        android:text="Hyppo"
-        android:textSize="24sp" />
+        android:gravity="center"
+        android:baselineAligned="false"
+        android:layout_marginBottom="10dp">
 
-    <ImageView
-        android:id="@+id/ivUserPic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/portraithyppo" />
-
-    <LinearLayout
-        android:id="@+id/moods"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ivUserPic"
-        android:clickable="true"
-        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivUserPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUserName"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="false"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/portraithyppo_mini" />
 
         <LinearLayout
-            android:id="@+id/sadMood"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:clickable="true">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/sadLogo"
+            <TextView
+                android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sad"
-                android:clickable="true"
-                android:onClick="moodClicked"/>
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Hyppo"
+                android:textSize="24sp" />
 
-            <!--<TextView
-                android:id="@+id/sadLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="moodClicked"
-                android:text="Sad" />-->
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/normalMood"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/normalLogo"
+            <TextClock
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/normal"
-                android:clickable="true"
-                android:onClick="moodClicked"/>
+                android:id="@+id/textClock" />
 
-            <!--<TextView
-                android:id="@+id/normal_Label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="moodClicked"
-                android:text="@string/textviewestado_Normal_off" />-->
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/happyMood"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/happyLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/happy"
-                android:clickable="true"
-                android:onClick="moodClicked"/>
-
-            <!--<TextView
-                android:id="@+id/happyLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-
-                android:onClick="moodClicked"
-                android:text="@string/textviewestado_Feliz_off" />-->
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/conditions"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignEnd="@+id/moods"
-        android:layout_alignLeft="@+id/moods"
-        android:layout_alignRight="@+id/moods"
-        android:layout_alignStart="@+id/moods"
-        android:layout_below="@+id/moods"
+        android:layout_height="wrap_content"
+        android:id="@+id/mood"
+        android:layout_below="@+id/headerLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moodQuestion"
+            android:id="@+id/moodQuestion"
+            android:layout_gravity="center_horizontal"
+            style="@style/titulos" />
+
+        <LinearLayout
+            android:id="@+id/moods"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/headerLayout"
+            android:clickable="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/sadMood"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/sadLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sad"
+                    android:clickable="true"
+                    android:onClick="moodClicked"
+                    android:background="@drawable/layout_selector" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/normalMood"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/normalLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="moodClicked"
+                    android:background="@drawable/layout_selector"
+                    android:src="@drawable/normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/happyMood"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/happyLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/happy"
+                    android:clickable="true"
+                    android:onClick="moodClicked"
+                    android:background="@drawable/layout_selector" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/condition"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:layout_alignEnd="@+id/mood"
+        android:layout_alignLeft="@+id/mood"
+        android:layout_alignRight="@+id/mood"
+        android:layout_alignStart="@+id/mood"
+        android:layout_below="@+id/mood"
         android:layout_marginTop="35dp"
         android:clickable="true"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/painLabel"
+            style="@style/titulos"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="painClicked"
-            android:text="@string/painLabel_off" />
+            android:layout_height="wrap_content"
+            android:text="@string/conditionQuestion"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:id="@+id/sleepLabel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="sleepClicked"
-            android:text="@string/sleepLabel_off" />
+            android:id="@+id/conditions">
 
-        <TextView
-            android:id="@+id/mentalLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="mentalClicked"
-            android:text="@string/mentalLabel_off" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/pain"
+                android:clickable="true"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/painLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="painClicked"
+                    android:src="@drawable/pain"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/painLabel"
+                    android:id="@+id/painLabel"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/sleepLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/sleep"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="sleepClicked"
+                />
+
+            <TextView
+                android:id="@+id/mentalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="mentalClicked"
+                android:text="@string/mentalLabel_off"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

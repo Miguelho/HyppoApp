@@ -1,11 +1,12 @@
 package miguel.hyppoapp.Application;
 
-import android.app.AlertDialog;
 import android.app.Application;
 import android.util.Log;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+
+import miguel.hyppoapp.ParseHandler;
 
 /**
  * Created by Miguel on 12/21/2015.

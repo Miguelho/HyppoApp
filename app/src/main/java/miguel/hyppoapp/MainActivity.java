@@ -5,61 +5,53 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
-
-import miguel.hyppoapp.Application.ParseHandler;
 
 public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private String errorMessage = "", mood = "", pain = "", sleep = "", mental = "";
     private TextView nameLabel, happyLabel, normalLabel, sadLabel;
     private ParseHandler parseHandler;
-    private boolean flagConditions = false;
-    private ParseObject condition = null, condition1 = null, condition2 = null;
+    private boolean flagConditions = true;
+    private ParseObject condition = null, condition1 = null, condition2 = null, state=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nameLabel = (TextView) findViewById(R.id.tvUserName);
         checkIfCurrentUser();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        nameLabel = (TextView) findViewById(R.id.tvUserName);
-        //happyLabel = (TextView) findViewById(R.id.happyLabel);
-        //normalLabel = (TextView) findViewById(R.id.normal_Label);
-        //sadLabel = (TextView) findViewById(R.id.sadLabel);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkForm()) {
                     Toast.makeText(getApplicationContext(), "Registro enviado", Toast.LENGTH_LONG).show();
                     addStates();
+                    generarDialogo("Gracias por su aportación",true).show();
+                    intent = new Intent(MainActivity.this, HistoryActivity.class);
+                    state.pinInBackground();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
                 } else {
-                    generarDialogo(errorMessage).show();
+                    generarDialogo(errorMessage, true).show();
                 }
             }
         });
@@ -81,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         ParseObject mood = new ParseObject("Mood");
         mood.setObjectId(moodString);
 
-        ParseObject state = new ParseObject("State");
+        state = new ParseObject("State");
         state.put("Relation_Mood", mood);
         state.put("Relation_User", ParseUser.getCurrentUser());
         ParseRelation<ParseObject> relation = state.getRelation("condition");
@@ -96,20 +88,23 @@ public class MainActivity extends AppCompatActivity {
             condition = new ParseObject("PhysicalState");
             condition.setObjectId(painString);
             relation.add(condition);
-        }
+        } else
+            condition = null;
         if (!sleep.equals("")) {
             String sleepString = parseHandler.conditionMap.get(sleep);
             condition1 = new ParseObject("PhysicalState");
             condition1.setObjectId(sleepString);
             relation.add(condition1);
-        }
+        } else
+            condition1 = null;
         if (!mental.equals("")) {
             String mentalString = parseHandler.conditionMap.get(mental);
             condition2 = new ParseObject("PhysicalState");
             condition2.setObjectId(mentalString);
             relation.add(condition2);
             //condition.setObjectId("x11TfeRz6h");
-        }
+        } else
+            condition2 = null;
 
         try {
             state.save();
@@ -121,24 +116,23 @@ public class MainActivity extends AppCompatActivity {
 
     public String moodClicked(View v) {
         ImageView imageView = (ImageView) v;
-        //TextView moodLabel = (TextView) v;
-        if (imageView == findViewById(R.id.sadLogo)){
-            mood="Sad";
+        if (imageView == findViewById(R.id.sadLogo)) {
+            mood = "Sad";
             Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
-        }else if(imageView == findViewById(R.id.normalLogo)){
-            mood="Normal";
+
+        } else if (imageView == findViewById(R.id.normalLogo)) {
+            mood = "Normal";
             Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
-        }else{
-            mood="Happy";
+        } else {
+            mood = "Happy";
             Toast.makeText(getApplicationContext(), mood, Toast.LENGTH_SHORT).show();
         }
         return mood;
     }
 
     public void painClicked(View v) {
-        TextView painLabel = (TextView) v;
         if (flagConditions) {
-            pain = painLabel.getText().toString();
+            pain = "Pain";
             Toast.makeText(getApplicationContext(), pain, Toast.LENGTH_SHORT).show();
             flagConditions = false;
         } else {
@@ -149,9 +143,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sleepClicked(View v) {
-        TextView sleepLabel = (TextView) v;
         if (flagConditions) {
-            sleep = sleepLabel.getText().toString();
+            sleep = "Sleep";
             Toast.makeText(getApplicationContext(), sleep, Toast.LENGTH_SHORT).show();
             flagConditions = false;
         } else {
@@ -162,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mentalClicked(View v) {
-        TextView mentalLabel = (TextView) v;
         if (flagConditions) {
-            mental = mentalLabel.getText().toString();
+            mental = "Mental";
+            Toast.makeText(getApplicationContext(), mental, Toast.LENGTH_SHORT).show();
             flagConditions = false;
         } else {
             mental = "";
@@ -173,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private Dialog generarDialogo(String error) {
+    private Dialog generarDialogo(String error, boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage(error);
         builder.setTitle("Atención");
-        builder.setCancelable(true);
+        builder.setCancelable(cancelable);
         return builder.create();
     }
 
@@ -218,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
-            //nameLabel.setText(ParseUser.getCurrentUser().get("Name").toString());
+            nameLabel.setText(ParseUser.getCurrentUser().get("Name").toString());
         }
     }
 
@@ -230,21 +223,3 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-
-/*try {
-            //Obtiene objetos Persona creados por el User y hace where createdBy == usuario actual.
-            ParseObject personaUser = ParseQuery.getQuery("User").whereEqualTo("createdBy",ParseUser.getCurrentUser()).getFirst();
-            nameLabel.setText(personaUser.get("Name").toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-
-
-        /*ParseObject parseObject= new ParseObject("State");
-        try {
-            ParseObject parseObject1= ParseQuery.getQuery("Person").get("d");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            errorMessage=e.getMessage();
-        }*/
