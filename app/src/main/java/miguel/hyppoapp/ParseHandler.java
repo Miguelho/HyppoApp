@@ -14,27 +14,35 @@ import java.util.Map;
  * Created by Miguel on 12/22/2015.
  */
 public class ParseHandler {
-    public static Map<String, String> moodMap = new HashMap<>();
-    public static Map<String, String> conditionMap = new HashMap<>();
+    public Map<String, String> moodMap = new HashMap<>();
+    public Map<String, String> conditionMap = new HashMap<>();
 
 
-    private static ParseHandler parseHandler = new ParseHandler();
+    private static ParseHandler parseHandler = null;
 
 
-    private ParseHandler(){}
+    private ParseHandler() {
+    }
+
     public static ParseHandler getInstance() {
+        if (parseHandler == null)
+            parseHandler = new ParseHandler();
         return parseHandler;
     }
-    public static void loadData() throws ParseException {
+
+    public void loadData() throws ParseException {
         Log.v("Singleton", "Creado");
         List<ParseObject> moodsDb = ParseQuery.getQuery("Mood").find();
         List<ParseObject> conditionsDb = ParseQuery.getQuery("PhysicalState").find();
 
         for (ParseObject iteratorMoods : moodsDb) {
             moodMap.put(String.valueOf(iteratorMoods.get("Name")), iteratorMoods.getObjectId());
+            //Happy object id
         }
         for (ParseObject iteratorConditions : conditionsDb) {
-            conditionMap.put(String.valueOf(iteratorConditions.get("Name")), iteratorConditions.getObjectId());
+            String objectId = iteratorConditions.getObjectId();
+            String name = String.valueOf(iteratorConditions.get("Name"));
+            conditionMap.put(objectId, name);
         }
 
         /*moodMap.put("Happy", "qAEiyzKOZu");
@@ -45,10 +53,11 @@ public class ParseHandler {
         conditionMap.put("Mental","757r5hhuPf");*/
 
     }
-    public static String returnKey(String objectId){
-        if(objectId.equals("yfSXhR3Ci3"))
+
+    public String returnKey(String objectId) {
+        if (objectId.equals("yfSXhR3Ci3"))
             return "Sad";
-        else if(objectId.equals("2kDjF5Hdaa"))
+        else if (objectId.equals("2kDjF5Hdaa"))
             return "Normal";
         else
             return "Happy";

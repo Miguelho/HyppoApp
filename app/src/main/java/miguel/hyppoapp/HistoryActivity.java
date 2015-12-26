@@ -34,24 +34,10 @@ public class HistoryActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        /*userQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null){
-                    listaEstados = new ArrayList<ParseObject>();
-                    for (ParseObject state: objects)
-                    {
-                        String courseName = state.getString("Name");
-                        listaEstados.add(state);
-                    }
-                }else
-                    e.printStackTrace();
-            }
-        });
-*/
+
 
         lv = (ListView) findViewById(R.id.listView);
-        hyppoAdapter = new HyppoAdapter(getApplicationContext(), 0, listaEstados);
+        hyppoAdapter = new HyppoAdapter(getApplicationContext(), R.layout.content_history, listaEstados);
         lv.setAdapter(hyppoAdapter);
     }
 
