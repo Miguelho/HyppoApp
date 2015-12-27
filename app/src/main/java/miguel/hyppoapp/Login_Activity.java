@@ -16,8 +16,16 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import bolts.Continuation;
+import bolts.Task;
 
 public class Login_Activity extends AppCompatActivity {
     private EditText usernameField, passwordField;
@@ -57,6 +65,9 @@ public class Login_Activity extends AppCompatActivity {
     }
 
 
+
+
+
     public boolean checkeoCampos() {
         if (!usernameField.getText().toString().equals("") && !passwordField.getText().toString().equals(""))
             return true;
@@ -81,6 +92,26 @@ public class Login_Activity extends AppCompatActivity {
         usernameField.setText("");
         passwordField.setText("");
 
+    }
+
+    public List<ParseObject> fetchDataLogin() {
+        final ArrayList<ParseObject> listaEstados=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("State").whereEqualTo("Relation_User", ParseUser.getCurrentUser());
+        try {
+            userQuery.findInBackground().onSuccessTask(new Continuation<List<ParseObject>, Task<Void>>() {
+                @Override
+                public Task<Void> then(Task<List<ParseObject>> task) throws Exception {
+                    List<ParseObject> results = task.getResult();
+                    listaEstados.addAll(results);
+                    return null;
+                }
+            }).waitForCompletion();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return listaEstados;
     }
 }
 

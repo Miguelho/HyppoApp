@@ -13,6 +13,7 @@ import miguel.hyppoapp.ParseHandler;
  */
 public class HypoAppApplication extends Application {
 
+
     @Override
     public void onCreate() {
         super.onCreate();

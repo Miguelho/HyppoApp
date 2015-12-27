@@ -30,12 +30,6 @@ public class HyppoAdapter extends ArrayAdapter<ParseObject> {
     private final List<ParseObject> registros;
     private final Context context;
 
-    private ParseQuery<ParseObject> localQuery;
-    private ParseObject mood = null;
-    private List <ParseObject> conditionsList;
-
-    private TextView dateLabel, moodLabel, conditionLabel1, conditionLabel2, conditionLabel3;
-    private ParseRelation relation;
 
     public HyppoAdapter(Context context, int resource, List<ParseObject> registros) {
         super(context, resource, registros);
@@ -49,12 +43,21 @@ public class HyppoAdapter extends ArrayAdapter<ParseObject> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ParseQuery<ParseObject> localQuery;
+        ParseObject mood = null;
+        List <ParseObject> conditionsList;
+        TextView dateLabel, moodLabel, conditionLabel1, conditionLabel2, conditionLabel3;
+        ParseRelation relation;
+
+
         /*LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 */
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_registro, parent, false);
         }
+
+
 
         ParseObject registro = getItem(position);
         localQuery = ParseQuery.getQuery("State");

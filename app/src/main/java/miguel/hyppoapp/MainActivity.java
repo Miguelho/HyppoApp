@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     addStates();
                     generarDialogo("Gracias por su aportación", true).show();
                     intent = new Intent(MainActivity.this, HistoryActivity.class);
-                    //state.pinInBackground();
+                    state.pinInBackground();
                     //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
 
