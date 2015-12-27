@@ -16,6 +16,7 @@ public class HypoAppApplication extends Application {
 
     @Override
     public void onCreate() {
+
         super.onCreate();
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);

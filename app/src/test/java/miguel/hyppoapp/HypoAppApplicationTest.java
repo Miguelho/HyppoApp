@@ -1,9 +1,9 @@
 package miguel.hyppoapp;
 
-import android.content.Context;
-import android.test.AndroidTestCase;
+import android.content.pm.PackageInfo;
 import android.test.ApplicationTestCase;
-import android.test.InstrumentationTestCase;
+import android.test.MoreAsserts;
+import android.test.mock.MockContext;
 import android.util.Log;
 
 import com.parse.Parse;
@@ -12,19 +12,12 @@ import com.parse.ParseObject;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import miguel.hyppoapp.Application.HypoAppApplication;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
@@ -33,11 +26,28 @@ import static org.mockito.Mockito.when;
 //@RunWith(RobolectricGradleTestRunner.class)
 //@Config(constants = BuildConfig.class)
 //@RunWith(MockitoJUnitRunner.class)
-public class HypoAppApplicationTest extends ApplicationTestCase<HypoAppApplication> {
-    //Context mMockContext;
 
+public class HypoAppApplicationTest extends ApplicationTestCase<HypoAppApplication> {
+
+    MockContext mMockContext = new MockContext();
+
+    private HypoAppApplication application;
     public HypoAppApplicationTest() {
         super(HypoAppApplication.class);
+    }
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        createApplication();
+        application = getApplication();
+
+
+    }
+
+    public void testCorrectVersion() throws Exception {
+        PackageInfo info = application.getPackageManager().getPackageInfo(application.getPackageName(), 0);
+        assertNotNull(info);
+        MoreAsserts.assertMatchesRegex("\\d\\.\\d", info.versionName);
     }
 
     @Test
@@ -53,7 +63,7 @@ public class HypoAppApplicationTest extends ApplicationTestCase<HypoAppApplicati
         //Mockito.when(mMockContext.getApplicationContext()).thenReturn(mMockContext);
 
         //when(mMockContext.getApplicationInfo()).thenReturn();
-        HypoAppApplication hypoAppApplication= new HypoAppApplication();
+        //HypoAppApplication hypoAppApplication= new HypoAppApplication();
 //this.getInstrumentation().getContext()
         //hypoAppApplication.onCreate();
         Parse.enableLocalDatastore(this.getContext());
@@ -65,5 +75,10 @@ public class HypoAppApplicationTest extends ApplicationTestCase<HypoAppApplicati
             Log.e("Error loadData()", "error while loading data.");
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testOnCreate() throws Exception {
+
     }
 }
